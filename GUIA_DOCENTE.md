@@ -19,3 +19,7 @@ Os testes de mutação da etapa 14 alteram temporariamente pontos documentados d
 ## Tempo e continuidade
 
 As seções são unidades de material e não equivalem automaticamente a encontros adicionais. Combine exposição curta em sala com prática entre encontros, conforme o cronograma do curso e o tempo restante após as aulas já dadas. Não reduza retroativamente o tempo das seções 01–06. Ao migrar ao projeto, conserve os testes e documente os adaptadores entre os contratos; não troque silenciosamente retorno falso por exceção.
+
+## Atualização de sequência — capítulos integrados
+
+A numeração didática agora é09(colaboração/interfaces),10(exceções),11(identidade/coleções),12(UML). Os IDs de contrato07,09,10,11,12,13,14 permanecem estáveis. A branch nova `pratica/12-uml` executa até13, sem exigir a etapa14. `projeto/00-testes` abre a Parte2 e executa `make test-projeto`, que valida14 e os testes autorais. Atualize o workflow de forks antigos antes da nova branch UML; não substitua implementações dos estudantes pelo starter pendente.

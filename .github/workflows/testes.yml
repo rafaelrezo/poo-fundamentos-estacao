@@ -27,6 +27,7 @@ jobs:
             pratica/12-igualdade) echo 'numero=12' >> "$GITHUB_OUTPUT" ;;
             pratica/13-colecoes) echo 'numero=13' >> "$GITHUB_OUTPUT" ;;
             pratica/14-testes) echo 'numero=14' >> "$GITHUB_OUTPUT" ;;
+            pratica/12-uml) echo 'numero=13' >> "$GITHUB_OUTPUT" ;;
             pratica/15-uml) echo 'numero=14' >> "$GITHUB_OUTPUT" ;;
             projeto/*) echo 'numero=projeto' >> "$GITHUB_OUTPUT" ;;
             *) echo '::error::Use uma branch documentada no README'; exit 1 ;;

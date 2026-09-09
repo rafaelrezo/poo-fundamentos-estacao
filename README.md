@@ -1,6 +1,6 @@
 # Fundamentos de POO: estação de sensores
 
-Starter público para as seções 07 e 09–15 do curso. As seções 01–06 e seus repositórios permanecem independentes; não sobrescreva suas entregas. A seção 08 mantém o repositório `rafaelrezo/poo-polimorfismo-contratos`. Depois dela, retorne a este fork para a seção 09.
+Starter público para as seções 07 e 09–12, além da abertura da Parte 2 do curso. As seções 01–06 e seus repositórios permanecem independentes; não sobrescreva suas entregas. A seção 08 mantém o repositório `rafaelrezo/poo-polimorfismo-contratos`. Depois dela, retorne a este fork para a seção 09.
 
 ## Requisitos e preparação
 
@@ -14,18 +14,20 @@ Cada linguagem mostra inicialmente `PENDENTE: 50 %` e `PENDENTE: 25 C`. O códig
 
 ## Caminho das etapas
 
-| Seção | Branch | Comando local e CI | Incremento |
+| Capítulo atual | Branch | Comando local e CI | Incremento |
 |---|---|---|---|
-| 07 | `pratica/07-heranca` | `make test ETAPA=07` | base com tag, especializações e invariantes |
-| 09 | `pratica/09-associacoes` | `make test ETAPA=09` | dois painéis compartilham e trocam sensor |
-| 10 | `pratica/10-interfaces` | `make test ETAPA=10` | contrato abstrato e duas implementações |
-| 11 | `pratica/11-excecoes` | `make test ETAPA=11` | falhas próprias, propagação e limpeza |
-| 12 | `pratica/12-igualdade` | `make test ETAPA=12` | identidade, igualdade, ordem e hash |
-| 13 | `pratica/13-colecoes` | `make test ETAPA=13` | catálogo genérico e coleção polimórfica |
-| 14 | `pratica/14-testes` | `make test ETAPA=14` | colaboração, testes autorais e mutações |
-| 15 | `pratica/15-uml` | `make test ETAPA=14` | revisão UML do sistema implementado |
+| 07 | `pratica/07-heranca` | `make test ETAPA=07` | herança e invariantes |
+| 09 — incremento A | `pratica/09-associacoes` | `make test ETAPA=09` | colaboração e vínculos |
+| 09 — incremento B | `pratica/10-interfaces` | `make test ETAPA=10` | interface e fontes |
+| 10 | `pratica/11-excecoes` | `make test ETAPA=11` | propagação e limpeza |
+| 11 — incremento A | `pratica/12-igualdade` | `make test ETAPA=12` | chaves, igualdade e hash |
+| 11 — incremento B | `pratica/13-colecoes` | `make test ETAPA=13` | catálogo e iteração |
+| 12 — fim da Parte 1 | `pratica/12-uml` | `make test ETAPA=13` | modelo do sistema, antes dos testes autorais |
+| Parte 2 — capítulo 01 | `projeto/00-testes` | `make test-projeto` | etapa técnica 14: projeto e testes autorais |
 
-Cada comando repete as etapas anteriores deste starter. Não existe ETAPA=08 aqui; não confunda número da seção com etapa do outro repositório. Na main, CI verifica somente baseline executável; a evidência funcional da entrega é a execução da branch/PR com a etapa correspondente.
+Os números de ETAPA são IDs dos contratos publicados, não números dos capítulos atuais. Eles permanecem estáveis para preservar forks. Não existe ETAPA=08 neste repositório. `pratica/14-testes` e `pratica/15-uml` continuam aceitas apenas por compatibilidade com o roteiro anterior; novos trabalhos seguem a tabela acima.
+
+Cada comando repete as etapas técnicas anteriores. UML exige apenas até13; a etapa14 começa depois, na Parte2. Na main, CI verifica somente o baseline executável; a evidência funcional é a execução da branch/PR.
 
 A aula no site do curso conduz o primeiro incremento de cada seção e reserva uma extensão para adaptação. Registre a decisão em `docs/decisoes.md` e o modelo em `docs/diagrama.md`.
 
@@ -33,7 +35,7 @@ A aula no site do curso conduz o primeiro incremento de cada seção e reserva u
 
 - Tag não vazia; nível finito em 0..100 e temperatura finita em -40..125.
 - Construção inválida lança erro; atualização inválida retorna falso e preserva a leitura.
-- A base da seção 07 é concreta quanto a operações (construtor protegido C++); a interface abstrata é elaborada na seção 10.
+- A base da seção 07 é concreta quanto a operações (construtor protegido C++); a interface abstrata é elaborada no capítulo09.
 - `PainelFixo` e `Bancada` referenciam sensores externos; o chamador garante sua vida em C++.
 - `IFonteLeitura`: `valor()` e `unidade()` são consultas; cliente não seleciona classes.
 - Falha de aquisição é uma operação distinta da rejeição de atualização. Exceções previstas são capturadas na fronteira; defeitos inesperados propagam.
@@ -45,7 +47,7 @@ A aula no site do curso conduz o primeiro incremento de cada seção e reserva u
 
 Crie a branch da seção a partir da main com a etapa anterior integrada; faça commits pequenos, teste localmente, push e PR para a main **do próprio fork**, nunca para o docente. Confira Actions e associe o resultado ao commit. Atualize `AI_LOG.md`, inclusive se não usou IA.
 
-Não altere `tests/contrato.*`, ferramentas, Makefile ou CI para obter aprovação. Na seção 14, **escreva seus próprios testes em `tests/aluno.cpp` e `tests/aluno.py`**. `make test-aluno` executa só esses testes. A etapa 14 também insere defeitos temporários para verificar se eles detectam problemas reais. O teste de mutação não altera seus fontes originais.
+Não altere `tests/contrato.*`, ferramentas, Makefile ou CI para obter aprovação. Na abertura da Parte2, **escreva seus próprios testes em `tests/aluno.cpp` e `tests/aluno.py`**. `make test-aluno` executa só esses testes. A etapa 14 também insere defeitos temporários para verificar se eles detectam problemas reais. O teste de mutação não altera seus fontes originais.
 
 ## Limites
 
@@ -53,4 +55,4 @@ A automação verifica contratos e algumas regressões. Não comprova entendimen
 
 ## Continuidade no projeto integrador
 
-Depois de concluir e integrar a etapa 15, use branches `projeto/01-arquitetura`, `projeto/02-integracao`, `projeto/03-regras`, `projeto/04-persistencia`, `projeto/05-comunicacao` e `projeto/06-entrega`. A CI executa `make test-projeto` nessas branches. Inicialmente esse alvo repete a etapa 14; a equipe deve acrescentar os testes de cada incremento ao mesmo alvo. O baseline verde sozinho não valida JSON, persistência ou rede. Abra PR para a main do próprio fork e registre resultados e decisões.
+Depois do capítulo12 (UML), conclua `projeto/00-testes` e integre a etapa técnica14. Depois use as branches `projeto/01-arquitetura`, `projeto/02-integracao`, `projeto/03-regras`, `projeto/04-persistencia`, `projeto/05-comunicacao` e `projeto/06-entrega`. A CI executa `make test-projeto` nessas branches. Inicialmente esse alvo repete a etapa 14; a equipe deve acrescentar os testes de cada incremento ao mesmo alvo. O baseline verde sozinho não valida JSON, persistência ou rede. Abra PR para a main do próprio fork e registre resultados e decisões.
