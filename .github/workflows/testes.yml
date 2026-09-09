@@ -1,0 +1,42 @@
+name: Contratos cumulativos dos fundamentos
+on:
+  push:
+    branches: [main, 'pratica/**', 'projeto/**']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contrato:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v6
+      - name: Selecionar etapa pela branch
+        id: etapa
+        env:
+          BRANCH: ${{ github.head_ref || github.ref_name }}
+        run: |
+          case "$BRANCH" in
+            main) echo 'numero=00' >> "$GITHUB_OUTPUT" ;;
+            pratica/07-heranca) echo 'numero=07' >> "$GITHUB_OUTPUT" ;;
+            pratica/09-associacoes) echo 'numero=09' >> "$GITHUB_OUTPUT" ;;
+            pratica/10-interfaces) echo 'numero=10' >> "$GITHUB_OUTPUT" ;;
+            pratica/11-excecoes) echo 'numero=11' >> "$GITHUB_OUTPUT" ;;
+            pratica/12-igualdade) echo 'numero=12' >> "$GITHUB_OUTPUT" ;;
+            pratica/13-colecoes) echo 'numero=13' >> "$GITHUB_OUTPUT" ;;
+            pratica/14-testes) echo 'numero=14' >> "$GITHUB_OUTPUT" ;;
+            pratica/15-uml) echo 'numero=14' >> "$GITHUB_OUTPUT" ;;
+            projeto/*) echo 'numero=projeto' >> "$GITHUB_OUTPUT" ;;
+            *) echo '::error::Use uma branch documentada no README'; exit 1 ;;
+          esac
+      - name: Baseline executavel
+        if: steps.etapa.outputs.numero == '00'
+        run: make run
+      - name: Mesmo contrato local e remoto
+        if: steps.etapa.outputs.numero != '00' && steps.etapa.outputs.numero != 'projeto'
+        run: make test ETAPA=${{ steps.etapa.outputs.numero }}
+      - name: Regressões e incrementos do projeto
+        if: steps.etapa.outputs.numero == 'projeto'
+        run: make test-projeto
