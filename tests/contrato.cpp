@@ -76,6 +76,18 @@ void etapa11() {
     exigir(abertas==0,"RAII deve liberar sessao ao propagar falha");
     rejeita<FalhaCalibracao>([&]{lerServico(fonte,true,false,abertas);},"calibracao deve lancar excecao especifica");
     exigir(abertas==0,"calibracao deve liberar sessao");
+    try {
+        lerServico(fonte,false,false,abertas);
+        exigir(false,"indisponibilidade e calibracao pendente nao podem produzir leitura");
+    } catch (const FalhaCalibracao&) {
+        exigir(false,"indisponibilidade deve ter prioridade sobre calibracao");
+    } catch (const FalhaLeitura&) { }
+    exigir(abertas==0,"duas falhas simultaneas devem liberar sessao");
+    SensorNivel sensor{"LT",10}; FonteNivel real(sensor); PainelFixo painel(sensor);
+    sensor.atualizar(20);
+    auto integrado=executarCiclo(real,true,true,abertas);
+    exigir(integrado.sucesso && integrado.valor==painel.leitura() && integrado.valor==20,
+           "painel e aquisicao devem observar o mesmo sensor atualizado");
     auto r=executarCiclo(fonte,false,true,abertas);
     exigir(!r.sucesso && abertas==0,"fronteira deve capturar FalhaLeitura");
     r=executarCiclo(fonte,true,false,abertas);
@@ -107,6 +119,12 @@ void etapa13() {
     exigir(c.quantidade()==2 && c.buscar(a) && c.buscar(a)->valor==12,"duplicata nao pode substituir valor");
     exigir(c.ids().size()==2 && c.ids().count(a)==1,"listar identificadores sem duplicatas");
     exigir(c.remover(a) && !c.remover(a) && c.quantidade()==1,"remocao deve informar ausencia");
+    SensorNivel sensor{"LT-externo",12};
+    Catalogo<Medicao> registros;
+    registros.inserir(a,Medicao{sensor.valor(),"%"});
+    sensor.atualizar(20);
+    exigir(registros.buscar(a) && registros.buscar(a)->valor==12,"registro e uma fotografia da leitura");
+    exigir(registros.remover(a) && sensor.valor()==20,"remover registro preserva sensor externo");
     Catalogo<std::string> nomes;
     exigir(nomes.inserir(a,"bancada") && *nomes.buscar(a)=="bancada","mesmo generico deve aceitar outro tipo");
     std::vector<std::unique_ptr<IFonteLeitura>> fontes;

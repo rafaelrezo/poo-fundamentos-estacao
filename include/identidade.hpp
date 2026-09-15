@@ -10,8 +10,8 @@ public:
         if (valor_.empty()) throw std::invalid_argument("identificador vazio");
     }
     const std::string& valor() const { return valor_; }
-    bool operator==(const IdSensor& outro) const { (void)outro; return false; } // TODO 12
-    bool operator<(const IdSensor& outro) const { (void)outro; return false; } // TODO 12
+    bool operator==(const IdSensor& outro) const { return valor_ == outro.valor_; }
+    bool operator<(const IdSensor& outro) const { return valor_ < outro.valor_; }
 };
 struct HashId {
     std::size_t operator()(const IdSensor& id) const {

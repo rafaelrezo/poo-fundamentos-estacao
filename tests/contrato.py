@@ -70,6 +70,20 @@ def etapa11():
     exigir(sessao.abertas==0,"finally libera ao propagar erro")
     rejeita(FalhaCalibracao,lambda:ler_servico(fonte,True,False,sessao))
     exigir(sessao.abertas==0,"liberar apos falha especifica")
+    try:
+        ler_servico(fonte,False,False,sessao)
+    except FalhaCalibracao:
+        raise AssertionError("indisponibilidade deve ter prioridade sobre calibracao")
+    except FalhaLeitura:
+        pass
+    else:
+        raise AssertionError("duas falhas nao podem produzir leitura")
+    exigir(sessao.abertas==0,"duas falhas devem liberar sessao")
+    sensor=SensorNivel("LT",10)
+    real,painel=FonteNivel(sensor),PainelFixo(sensor)
+    sensor.atualizar(20)
+    exigir(executar_ciclo(real,True,True,sessao)==(True,painel.leitura())
+           and painel.leitura()==20,"painel e aquisicao observam o mesmo sensor")
     exigir(executar_ciclo(fonte,False,True,sessao)==(False,0),"capturar falha na fronteira")
     exigir(executar_ciclo(fonte,True,False,sessao)==(False,0),"captura da base inclui derivada")
     exigir(executar_ciclo(fonte,True,True,sessao)==(True,7) and sessao.abertas==0,"recuperar ciclo seguinte")
@@ -97,6 +111,12 @@ def etapa13():
     exigir(c.quantidade()==2 and c.buscar(a).valor==12,"preservar medicao ao rejeitar duplicata")
     exigir(c.ids()=={a,b},"conjunto de chaves")
     exigir(c.remover(a) and not c.remover(a) and c.quantidade()==1,"remover e detectar ausencia")
+    sensor=SensorNivel("LT-externo",12)
+    registros=Catalogo[Medicao]()
+    registros.inserir(a,Medicao(sensor.valor(),"%"))
+    sensor.atualizar(20)
+    exigir(registros.buscar(a).valor==12,"registro e fotografia da leitura")
+    exigir(registros.remover(a) and sensor.valor()==20,"remover registro preserva sensor externo")
     nomes=Catalogo[str]()
     exigir(nomes.inserir(a,"bancada") and nomes.buscar(a)=="bancada","mesmo generico com outro tipo")
     fontes=[]

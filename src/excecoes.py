@@ -14,12 +14,19 @@ class Sessao:
 
 def adquirir(fonte, disponivel, calibrado, sessao):
     sessao.abrir()
-    # TODO 11: lancamento e finally para liberar a sessao.
-    return fonte.valor()
+    try:
+        if not disponivel:
+            raise FalhaLeitura("fonte indisponivel")
+        # TODO A: rejeitar a falta de calibracao com o tipo especifico.
+        return fonte.valor()
+    finally:
+        sessao.fechar()
 
 def ler_servico(fonte, disponivel, calibrado, sessao):
     return adquirir(fonte, disponivel, calibrado, sessao)
 
 def executar_ciclo(fonte, disponivel, calibrado, sessao):
-    # TODO 11: capturar FalhaLeitura; retornar (False, 0) nesse caso.
-    return True, ler_servico(fonte, disponivel, calibrado, sessao)
+    try:
+        return True, ler_servico(fonte, disponivel, calibrado, sessao)
+    except FalhaLeitura:
+        return False, 0

@@ -9,10 +9,10 @@ class IdSensor:
     def __eq__(self, outro):
         if not isinstance(outro, IdSensor):
             return NotImplemented
-        return False  # TODO 12: igualdade logica.
+        return self.valor == outro.valor
     def __lt__(self, outro):
         if not isinstance(outro, IdSensor):
             return NotImplemented
-        return False  # TODO 12: ordem lexicografica.
+        return self.valor < outro.valor
     def __hash__(self):
         return hash(self.valor)

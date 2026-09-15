@@ -20,6 +20,8 @@ jobs:
         run: |
           case "$BRANCH" in
             main) echo 'numero=00' >> "$GITHUB_OUTPUT" ;;
+            pratica/integrada-a) echo 'numero=A' >> "$GITHUB_OUTPUT" ;;
+            pratica/integrada-b) echo 'numero=B' >> "$GITHUB_OUTPUT" ;;
             pratica/07-heranca) echo 'numero=07' >> "$GITHUB_OUTPUT" ;;
             pratica/09-associacoes) echo 'numero=09' >> "$GITHUB_OUTPUT" ;;
             pratica/10-interfaces) echo 'numero=10' >> "$GITHUB_OUTPUT" ;;

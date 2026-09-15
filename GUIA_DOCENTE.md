@@ -1,25 +1,44 @@
-# Guia docente
+# Guia docente — práticas integradas
 
-O starter constitui uma trilha nova e preserva os arquivos já utilizados nas seções 01–06. Não se deve exigir que o estudante encontre ControladorNivel ou ETAPA=06 no repositório de composição; a seção 07 inicia este recorte explícito. A seção 08 continua usando seu starter próprio, e a 09 retoma a main deste fork.
+## Escopo e tempo
 
-## Roteiro e validação
+O capítulo 07 permanece com sua atividade de herança. O 08 mantém seu starter próprio. Nos capítulos 09–12, há duas atividades: A encerra 09+10; B encerra 11+12. Os capítulos 09 e 11 usam demonstrações completas sem entrega própria.
 
-Use a tabela de branches do README. Cada etapa tem explicação guiada no site, uma extensão autônoma e testes cumulativos locais/remotos. A solução de referência deve ser mantida separadamente; este repositório contém apenas esqueletos, infraestrutura, testes e instruções.
+Reserve os quatro encontros de 2h: 09 expositivo; 10 com 80 min de exposição e 40 min de início de A; 11 expositivo; 12 com 60 min de modelagem e 60 min de início de B. O orçamento é de até 2h externas por prática, incluindo preparação. É uma estimativa de planejamento, a calibrar observando a turma; não é tempo comprovado por execução automatizada.
 
-Antes da distribuição, `make run` precisa compilar nas duas linguagens; `make test ETAPA=07` deve falhar na tag pendente. Na solução, a etapa 14 deve passar todas as etapas e detectar seis mutações nos testes autorais. Nenhum segredo é necessário; a única permissão do workflow é contents: read. Falhas funcionais no starter são intencionais; erros de ferramenta ou etapas ausentes não são.
+## O que avaliar
 
-A main executa apenas baseline, pois precisa servir a forks novos. Ao avaliar entregas, confira a execução da branch/PR correspondente ao commit. Se os arquivos de automação tiverem sido modificados, investigue o diff e valide com os contratos originais em ambiente isolado.
+- A: consulta do painel e calibração; explicar associação, propagação, fronteira de captura e recurso liberado.
+- B: inserção, busca e remoção; justificar igualdade das chaves, política de duplicata, multiplicidades e independência do sensor.
+- Uma PR por atividade, com commits cumulativos do incremento guiado e da extensão. Não atribuir as antigas etapas 09–13 e UML como exercícios adicionais.
+- Interface, fontes, bancada, troca de vínculo, RAII/finally, comparação, hash, genericidade, listagem e soma polimórfica são infraestrutura fornecida. A exposição explica essas decisões; o aluno deve entendê-las sem reimplementar tudo.
 
-## Competências avaliadas
+## Validação antes da distribuição
 
-07: herança e invariantes; 09: referência, associação e ciclo de vida; 10: abstração, interface e cliente substituível; 11: lançamento, propagação, captura e limpeza; 12: igualdade/identidade/hash; 13: 1:N e generics; 14: coesão, acoplamento e autoria de testes; 15: UML consistente com o código.
+A baseline precisa compilar e executar com `make run`. A etapa 07 deve falhar na tag pendente. Numa cópia privada, complete a solução de referência e confira:
 
-Os testes de mutação da etapa 14 alteram temporariamente pontos documentados do esqueleto (política e encaminhamento de aquisição). Uma mutação que não compila não conta como detectada. A inspeção deve confirmar que os testes do aluno falham pelo comportamento, não por procurar texto no fonte. A ferramenta não substitui revisão humana nem comprova cobertura total.
+1. `make test ETAPA=A` falha primeiro na consulta; após o incremento guiado, na calibração; depois da extensão, passa.
+2. `make test ETAPA=B` falha na inserção; após inserção/busca, na remoção; depois da extensão, passa.
+3. Remover uma chave não modifica o sensor externo; consultas e aquisições veem o mesmo estado atualizado.
+4. `make test-projeto` passa depois da atividade da Parte 2 e seus testes autorais detectam as seis mutações.
+5. O material demonstrativo não publica a solução de calibração nem de remoção. A solução de referência não entra neste repositório público.
 
-## Tempo e continuidade
+O runner mantém A -> 11 e B -> 13 como aliases cumulativos. As branches `pratica/integrada-a` e `pratica/integrada-b` executam exatamente o mesmo comando local. As antigas branches continuam mapeadas no workflow para compatibilidade.
 
-As seções são unidades de material e não equivalem automaticamente a encontros adicionais. Combine exposição curta em sala com prática entre encontros, conforme o cronograma do curso e o tempo restante após as aulas já dadas. Não reduza retroativamente o tempo das seções 01–06. Ao migrar ao projeto, conserve os testes e documente os adaptadores entre os contratos; não troque silenciosamente retorno falso por exceção.
+## Forks antigos
 
-## Atualização de sequência — capítulos integrados
+Siga [ATUALIZACAO.md](ATUALIZACAO.md). A atualização faz mesclagem de três versões: baseline anterior, arquivo atual do estudante e infraestrutura nova. Nenhum arquivo é escrito se houver conflito; o relatório apresenta cópias para resolução acompanhada. Os sensores do capítulo 07 e os arquivos de decisões do aluno não são substituídos.
 
-A numeração didática agora é09(colaboração/interfaces),10(exceções),11(identidade/coleções),12(UML). Os IDs de contrato07,09,10,11,12,13,14 permanecem estáveis. A branch nova `pratica/12-uml` executa até13, sem exigir a etapa14. `projeto/00-testes` abre a Parte2 e executa `make test-projeto`, que valida14 e os testes autorais. Atualize o workflow de forks antigos antes da nova branch UML; não substitua implementações dos estudantes pelo starter pendente.
+Uma atualização de infraestrutura pode integrar a mesma branch da prática A. Registre-a num commit separado. Avalie os comportamentos atribuídos, não a quantidade de linhas recebidas na atualização. Alunos com etapas antigas concluídas podem reaproveitá-las; não devem refazer suas soluções para copiar o novo starter.
+
+## CI e revisão humana
+
+A `main` executa somente a baseline, pois precisa receber forks novos com pendências intencionais. A evidência funcional é o resultado da branch/PR associado ao commit. Os workflows usam `contents: read`, sem segredos. Em forks com Actions desativado, habilite a execução e faça o próximo push.
+
+Confira alterações em testes e automação pelo diff. Testes visíveis não provam entendimento nem correção de UML; confronte requisito, diagrama e programa. Em avaliação, peça defesa oral curta. A etapa 14 verifica autoria de testes com mutações em cópias temporárias: mutação que não compila não conta como detectada.
+
+## Passagem para a Parte 2
+
+A prática B verde deixa todos os contratos até 13 satisfeitos, incluindo a infraestrutura que passou a ser fornecida. `projeto/00-testes` amplia essa base; não há tarefa retirada do roteiro que ainda precise ser resolvida escondida entre as partes. Preserve o encaminhamento de `lerServico`/`ler_servico`, utilizado nos testes de propagação e mutação.
+
+Referências operacionais: [eventos do GitHub Actions](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows) e [sintaxe e permissões](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax), conferidas em 15/09/2026.

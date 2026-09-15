@@ -1,58 +1,71 @@
 # Fundamentos de POO: estação de sensores
 
-Starter público para as seções 07 e 09–12, além da abertura da Parte 2 do curso. As seções 01–06 e seus repositórios permanecem independentes; não sobrescreva suas entregas. A seção 08 mantém o repositório `rafaelrezo/poo-polimorfismo-contratos`. Depois dela, retorne a este fork para a seção 09.
+Starter público do capítulo 07, das práticas integradas **A (09+10)** e **B (11+12)** e da abertura da Parte 2. O capítulo 08 usa `rafaelrezo/poo-polimorfismo-contratos`; depois dele, retorne a este fork.
 
-## Requisitos e preparação
+## Requisitos e primeira execução
 
-Git, GNU Make, g++ com C++17 e Python 3.10+. Faça fork, clone seu fork, mantenha apenas `origin` apontando para ele. Não configure `upstream`.
+Git, GNU Make, g++ com C++17 e Python 3.10+. Faça fork e clone seu próprio fork. Mantenha somente `origin` apontando para ele, sem `upstream`.
 
 ```bash
 make run
 ```
 
-Cada linguagem mostra inicialmente `PENDENTE: 50 %` e `PENDENTE: 25 C`. O código inicial compila; os testes funcionais falham intencionalmente. O primeiro diagnóstico de `make test ETAPA=07` pede a tag correta na classe-base. Todos os módulos já possuem esqueletos compiláveis; complete apenas os TODOs da etapa atual.
+O programa compila; em cada linguagem, mostra `PENDENTE: 50 %` e `PENDENTE: 25 C`. O capítulo 07 completa a identificação dos sensores. `make test ETAPA=07` inicialmente falha pedindo a tag correta.
 
-## Caminho das etapas
+Já possui um fork anterior a esta revisão? Siga [ATUALIZACAO.md](ATUALIZACAO.md) antes das práticas integradas. Não substitua as implementações do estudante pelo starter pendente.
 
-| Capítulo atual | Branch | Comando local e CI | Incremento |
+## Duas práticas integradas
+
+| Momento | Branch | Comando local e CI | Trabalho do estudante |
 |---|---|---|---|
-| 07 | `pratica/07-heranca` | `make test ETAPA=07` | herança e invariantes |
-| 09 — incremento A | `pratica/09-associacoes` | `make test ETAPA=09` | colaboração e vínculos |
-| 09 — incremento B | `pratica/10-interfaces` | `make test ETAPA=10` | interface e fontes |
-| 10 | `pratica/11-excecoes` | `make test ETAPA=11` | propagação e limpeza |
-| 11 — incremento A | `pratica/12-igualdade` | `make test ETAPA=12` | chaves, igualdade e hash |
-| 11 — incremento B | `pratica/13-colecoes` | `make test ETAPA=13` | catálogo e iteração |
-| 12 — fim da Parte 1 | `pratica/12-uml` | `make test ETAPA=13` | modelo do sistema, antes dos testes autorais |
-| Parte 2 — capítulo 01 | `projeto/00-testes` | `make test-projeto` | etapa técnica 14: projeto e testes autorais |
+| Capítulo 07 | `pratica/07-heranca` | `make test ETAPA=07` | encaminhar tag à base e preservar invariantes |
+| Final do 10, integrando 09+10 | `pratica/integrada-a` | `make test ETAPA=A` | consulta do painel; extensão de calibração |
+| Final do 12, integrando 11+12 | `pratica/integrada-b` | `make test ETAPA=B` | inserção e busca; remoção e modelagem |
+| Parte 2 — capítulo 01 | `projeto/00-testes` | `make test-projeto` | delegação e testes autorais |
 
-Os números de ETAPA são IDs dos contratos publicados, não números dos capítulos atuais. Eles permanecem estáveis para preservar forks. Não existe ETAPA=08 neste repositório. `pratica/14-testes` e `pratica/15-uml` continuam aceitas apenas por compatibilidade com o roteiro anterior; novos trabalhos seguem a tabela acima.
+Os capítulos 09 e 11 são expositivos com demonstrações; não há entrega própria neles. Cada prática integrada tem um incremento guiado, uma extensão e **uma PR**. Faça commits pequenos na branch da atividade. A CI repete o contrato completo a cada push; uma falha durante o incremento guiado indica a extensão pendente. Integre somente depois de concluir e validar a atividade.
 
-Cada comando repete as etapas técnicas anteriores. UML exige apenas até13; a etapa14 começa depois, na Parte2. Na main, CI verifica somente o baseline executável; a evidência funcional é a execução da branch/PR.
+### Prática A
 
-A aula no site do curso conduz o primeiro incremento de cada seção e reserva uma extensão para adaptação. Registre a decisão em `docs/decisoes.md` e o modelo em `docs/diagrama.md`.
+Pré-requisito: capítulo 07 integrado. Complete `PainelFixo.leitura` em `include/relacoes.hpp` e `src/relacoes.py`. Depois adapte `adquirir` em `include/excecoes.hpp` e `src/excecoes.py` para a falta de calibração. O site demonstra a consulta e a falha de indisponibilidade; a extensão exige decisão do aluno.
 
-## Contratos que não mudam
+São fornecidos: troca de vínculo, bancada, contrato abstrato, fontes, sessão e limpeza, falha de indisponibilidade, serviço e captura. Esses comportamentos continuam testados, mas não são seis exercícios adicionais.
+
+`make test ETAPA=A` repete os contratos técnicos 07, 09, 10 e 11. Primeiro aponta a consulta pendente; depois, a calibração. Ao concluir, termina com `OK pratica integrada A (C++ e Python)`.
+
+### Prática B
+
+Pré-requisito: A integrada. Complete `inserir`, `buscar` e `remover` em `include/colecoes.hpp` e `src/colecoes.py`. O tipo genérico, a identidade, a comparação, o hash, a listagem e a soma polimórfica são infraestrutura fornecida e explicada nas demonstrações.
+
+`make test ETAPA=B` repete A e os contratos 12 e 13. Depois da inserção e busca, a primeira pendência será a remoção. Ao concluir, termina com `OK pratica integrada B (C++ e Python)`.
+
+No mesmo trabalho, atualize `docs/diagrama.md`: vista do catálogo, pequena vista de colaboração e três correspondências com o código. Justifique multiplicidades e a independência do sensor externo. Código e modelo formam uma única entrega.
+
+## Contratos preservados
 
 - Tag não vazia; nível finito em 0..100 e temperatura finita em -40..125.
 - Construção inválida lança erro; atualização inválida retorna falso e preserva a leitura.
-- A base da seção 07 é concreta quanto a operações (construtor protegido C++); a interface abstrata é elaborada no capítulo09.
+- A base do capítulo 07 não declara operações abstratas; seu construtor C++ é protegido. `IFonteLeitura` é a interface abstrata do capítulo 09.
 - `PainelFixo` e `Bancada` referenciam sensores externos; o chamador garante sua vida em C++.
-- `IFonteLeitura`: `valor()` e `unidade()` são consultas; cliente não seleciona classes.
-- Falha de aquisição é uma operação distinta da rejeição de atualização. Exceções previstas são capturadas na fronteira; defeitos inesperados propagam.
-- `IdSensor` compara a tag exata, sem normalização; nenhuma API modifica seu conteúdo. Hash é coerente com igualdade.
-- Catálogo rejeita duplicata sem substituir o item. `buscar` retorna ponteiro nulo/None quando ausente; valores None não fazem parte do contrato de itens desta atividade.
-- Soma de fontes é um experimento com percentuais de simulação, todos na mesma unidade; não some grandezas físicas incompatíveis.
+- As fontes oferecem `valor()` e `unidade()` como consultas. O cliente aceita novas implementações sem selecionar classes.
+- Indisponibilidade tem prioridade sobre calibração. Falhas previstas são recuperadas na fronteira; defeitos inesperados propagam após a limpeza.
+- `IdSensor` usa a tag exata, sem normalização. Chaves são estáveis; hash é coerente com igualdade.
+- Catálogo rejeita duplicata sem substituir o item. Busca ausente retorna ponteiro nulo/None; `None` não é um item válido do domínio desta atividade.
+- Remoção não altera o sensor externo. Em Python, referências externas a registros imutáveis podem continuar existindo.
+- A soma de fontes fornecida é um experimento com percentuais da mesma unidade, não uma soma de grandezas físicas incompatíveis.
 
-## Fluxo de entrega
+## Entrega e evidências
 
-Crie a branch da seção a partir da main com a etapa anterior integrada; faça commits pequenos, teste localmente, push e PR para a main **do próprio fork**, nunca para o docente. Confira Actions e associe o resultado ao commit. Atualize `AI_LOG.md`, inclusive se não usou IA.
+Crie a branch documentada a partir da `main` com a atividade anterior integrada. Execute o comando local, faça push e abra PR para a `main` **do próprio fork**, nunca contra o repositório-base. Inclua saída local, link de Actions associado ao commit e explicação técnica. Registre em `AI_LOG.md` os pedidos, aceites/rejeições e justificativas, ou declare ausência de IA.
 
-Não altere `tests/contrato.*`, ferramentas, Makefile ou CI para obter aprovação. Na abertura da Parte2, **escreva seus próprios testes em `tests/aluno.cpp` e `tests/aluno.py`**. `make test-aluno` executa só esses testes. A etapa 14 também insere defeitos temporários para verificar se eles detectam problemas reais. O teste de mutação não altera seus fontes originais.
+Se Actions estiver desativado no fork, habilite os workflows na aba Actions. Na `main`, CI verifica apenas a baseline executável; a evidência funcional é a execução da branch/PR. A automação não comprova compreensão ou correção semântica de UML. O docente revisa diff, decisões e, em avaliações, faz defesa oral curta.
 
-## Limites
+Não altere testes fornecidos, ferramentas, Makefile ou CI para obter aprovação. Na abertura da Parte 2, escreva seus testes em `tests/aluno.cpp` e `tests/aluno.py`. `make test-aluno` executa esses arquivos; `make test-projeto` também verifica se eles detectam seis defeitos deliberados em cópias temporárias.
 
-A automação verifica contratos e algumas regressões. Não comprova entendimento, semântica UML, qualidade de todos os testes ou ausência universal de defeitos. O professor revisa diff, justificativas e, em avaliações, defesa oral curta. Consulte `GUIA_DOCENTE.md` para operação de CI.
+## Compatibilidade e continuidade
 
-## Continuidade no projeto integrador
+Os IDs antigos continuam válidos: `07`, `09`, `10`, `11`, `12`, `13`, `14`. A equivale à validação até 11; B, até 13. As branches antigas seguem aceitas por compatibilidade, sem constituir entregas extras para o novo roteiro. As práticas ainda não concluídas permanecem com marcadores de comportamento pendente.
 
-Depois do capítulo12 (UML), conclua `projeto/00-testes` e integre a etapa técnica14. Depois use as branches `projeto/01-arquitetura`, `projeto/02-integracao`, `projeto/03-regras`, `projeto/04-persistencia`, `projeto/05-comunicacao` e `projeto/06-entrega`. A CI executa `make test-projeto` nessas branches. Inicialmente esse alvo repete a etapa 14; a equipe deve acrescentar os testes de cada incremento ao mesmo alvo. O baseline verde sozinho não valida JSON, persistência ou rede. Abra PR para a main do próprio fork e registre resultados e decisões.
+Após integrar B, use `projeto/00-testes`. O comando `make test-projeto` executa a etapa técnica 14, incluindo todos os contratos anteriores e os testes autorais. Não é necessário completar uma atividade adicional de UML. Depois, use as branches `projeto/01-arquitetura`, `projeto/02-integracao`, `projeto/03-regras`, `projeto/04-persistencia`, `projeto/05-comunicacao` e `projeto/06-entrega`. Acrescente os testes de cada incremento ao mesmo alvo: a baseline não valida JSON, persistência ou rede.
+
+Consulte [GUIA_DOCENTE.md](GUIA_DOCENTE.md) para escopo e validação.
